@@ -1,0 +1,23 @@
+@startuml
+
+note left
+ The triggering condition may be 
+ from a client, market, etc.
+end note
+(*) -down-> "Specify Use Case"
+
+if "Validate Use Case" then
+  -down->[pass] "Identify & Describe Abstraction(s)"
+  -down-> "Group Abstraction(s)"
+  -down-> "Design & Document API(s)"
+  if "Verify API(s)" then
+    -down->[pass] (*)
+  else
+    -up->[fail] "Identify & Describe Abstraction(s)"   
+  endif
+else
+  -left->[fail] "Fix Use Case"
+  -down->"Identify & Describe Abstraction(s)"
+endif
+
+@enduml

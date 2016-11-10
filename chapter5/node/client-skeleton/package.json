@@ -1,0 +1,12 @@
+{
+  "name": "restlet-problemreports-sdk",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {},
+  "description": "",
+  "keywords": [],
+  "author": "",
+  "dependencies": {
+    "request": "2.60.0"
+  }
+}

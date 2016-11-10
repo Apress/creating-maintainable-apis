@@ -1,0 +1,115 @@
+#%RAML 0.8
+title: Problem Reports
+version: "1.0.0"
+baseUri: "http://localhost:80/rad-demo"
+schemas: 
+    - 
+        ReportList: '{"type":"object","$schema":"http://json-schema.org/draft-03/schema#","description":"The list of report URLs.","title":"ReportList","properties":{"reports":{"type":"array","required":true,"title":"reports","items":{"type":"string","title":"reports"},"uniqueItems":false}}}'
+    - 
+        Report: '{"type":"object","$schema":"http://json-schema.org/draft-03/schema#","description":"The description of an individual report.","title":"Report","properties":{"title":{"type":"string","required":true,"title":"title"},"description":{"type":"string","required":false,"title":"description"},"errorCode":{"type":"string","required":true,"title":"errorCode"},"statusCode":{"type":"integer","required":true,"title":"statusCode"},"correlationId":{"type":"string","required":false,"title":"correlationId"},"id":{"type":"string","required":true,"title":"id"}}}'
+/reports: 
+    displayName: List of all problem reports.
+    description: This is the entry point showing the list of URLs toward individual problem reports.
+    get: 
+        description: Get the list of URLs pointing to individual reports.
+        displayName: Retrieve the list of reports.
+        responses: 
+            "200": 
+                description: Each item in the list is a URL toward an individual report.
+                body: 
+                    application/json: 
+                        schema: ReportList
+                        example: '{"reports":["sample reports"]}'
+                    text/xml: 
+                        schema: ReportList
+                        example: '<ReportList xmlns=""><reports>sample reports</reports></ReportList>'
+                    application/xml: 
+                        schema: ReportList
+                        example: '<ReportList xmlns=""><reports>sample reports</reports></ReportList>'
+    post: 
+        description: Creates a new report, and adds it to this collection.
+        displayName: Create a new report.
+        body: 
+            application/json: 
+                schema: Report
+                example: '{"title":"sample title","description":"sample description","errorCode":"sample errorCode","statusCode":1,"correlationId":"sample correlationId","id":"sample id"}'
+            text/xml: 
+                schema: Report
+                example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+            application/xml: 
+                schema: Report
+                example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+        responses: 
+            "201": 
+                description: The updated report list.
+                body: 
+                    application/json: 
+                        schema: ReportList
+                        example: '{"reports":["sample reports"]}'
+                    text/xml: 
+                        schema: ReportList
+                        example: '<ReportList xmlns=""><reports>sample reports</reports></ReportList>'
+                    application/xml: 
+                        schema: ReportList
+                        example: '<ReportList xmlns=""><reports>sample reports</reports></ReportList>'
+    delete: 
+        description: This action prunes away all registered problem reports.
+        displayName: Deletes all reports from the system.
+        responses: 
+            "204": 
+/reports/report/{reportId}: 
+    displayName: An individual problem report.
+    description: Shows a collection of attributes describing an individual problem report.
+    uriParameters: 
+        reportId: 
+            displayName: reportId
+            description: The id of the individual report.
+            type: string
+            required: false
+            repeat: false
+    get: 
+        description: Retrieves an individual report.
+        displayName: Get the report.
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: Report
+                        example: '{"title":"sample title","description":"sample description","errorCode":"sample errorCode","statusCode":1,"correlationId":"sample correlationId","id":"sample id"}'
+                    text/xml: 
+                        schema: Report
+                        example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+                    application/xml: 
+                        schema: Report
+                        example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+            "404": 
+    delete: 
+        description: Deletes the given report permanenty from the system.
+        displayName: Deletes an individual report.
+        responses: 
+            "204": 
+    put: 
+        description: The given report is updated to reflect the new variables.
+        displayName: Updates the given report.
+        body: 
+            application/json: 
+                schema: Report
+                example: '{"title":"sample title","description":"sample description","errorCode":"sample errorCode","statusCode":1,"correlationId":"sample correlationId","id":"sample id"}'
+            text/xml: 
+                schema: Report
+                example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+            application/xml: 
+                schema: Report
+                example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+        responses: 
+            "200": 
+                body: 
+                    application/json: 
+                        schema: Report
+                        example: '{"title":"sample title","description":"sample description","errorCode":"sample errorCode","statusCode":1,"correlationId":"sample correlationId","id":"sample id"}'
+                    text/xml: 
+                        schema: Report
+                        example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'
+                    application/xml: 
+                        schema: Report
+                        example: '<Report xmlns=""><title>sample title</title><description>sample description</description><errorCode>sample errorCode</errorCode><statusCode>1</statusCode><correlationId>sample correlationId</correlationId><id>sample id</id></Report>'

@@ -1,0 +1,52 @@
+@startuml
+class Naming {
+  String: id
+}
+class PowerSystemResource {
+  String: id
+}
+class EquipmentContainer {
+  String: id
+}
+class ConductingEquipment {
+  String: id
+}
+class Terminal {
+  String: id
+}
+class Measurement {
+  String: id
+}
+
+class ConnectivityNode {
+  String: id
+}
+note right: Switch/Node Model
+
+class TopologicalNode {
+  String: id
+}
+note right: Bus/Branch Model
+
+class TopologicalIsland {
+  String: id
+}
+
+Naming <|-- PowerSystemResource
+Naming <|-- ConnectivityNode
+Naming <|-- TopologicalNode
+Naming <|-- TopologicalIsland
+Naming <|-- Terminal
+Naming <|-- Measurement
+PowerSystemResource <|-- EquipmentContainer
+
+ConductingEquipment "1" o-- "many" Terminal : has >
+ConnectivityNode "0..1" o- "many" Terminal : has >
+Terminal "0..1" o-- "many" Measurement : attaches >
+EquipmentContainer "1" o- "many" ConnectivityNode : exposes > 
+TopologicalNode "0..1" o-- "many" ConnectivityNode : contains >
+TopologicalIsland "1" o-- "many" TopologicalNode : encompasses >
+
+hide attributes
+hide methods
+@enduml

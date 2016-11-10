@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "artifacts",
+    "attributes": {
+      "name": "Magic Ball",
+      "description": "This is a very powerful magic.",
+      "value": 20,
+      "purpose": "Magic"
+    }
+  }
+}

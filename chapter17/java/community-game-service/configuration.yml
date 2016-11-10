@@ -1,0 +1,24 @@
+katharsis:
+  host: http://localhost:8080
+  searchPackage: rs.exproit.community_game.domain
+  webPrefix: /community-game
+
+mongo:
+  host: localhost
+  port: 27017
+  db: community_game
+  user:
+  password:
+
+server:
+  type: simple
+  applicationContextPath: /community-game
+  adminContextPath: /admin
+  connector:
+    type: http
+    port: 8080
+
+logging:
+  level: ALL
+  appenders:
+    - type: console

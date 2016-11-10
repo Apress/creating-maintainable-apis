@@ -1,0 +1,94 @@
+{
+  "namespace": "rs.exproit.load_profile_generator.domain",
+  "name": "LoadProfileModel",
+  "type": "record",
+  "doc": "Load profile (LP) data with a reference to the corresponding load condition.",
+  "fields": [
+    { 
+      "name": "organizationId",
+      "type": ["null", "string"],
+      "default": null,
+      "order": "ignore",
+      "doc": "The unique identifier of the power distribution company."
+    },
+    { 
+      "name": "consumerId",
+      "type": ["null", "string"],
+      "default": null,
+      "order": "ignore",
+      "doc": "The unique identifier of the consumer inside the power distribution company."
+    },
+    { 
+      "name": "createdAt",
+      "type": "int",
+      "logicalType": "date",
+      "order": "descending",
+      "doc": "The calendar date when this LP was created."
+    },    
+    {
+      "name": "deviceId",  
+      "type": "string",
+      "doc": "The unique device identifier, which generated this LP." 
+    },
+    { 
+      "name": "frequency", 
+      "type": "int",
+      "default": 15,
+      "order": "ignore",
+      "doc": "The sampling frequency in minutes."
+    },
+    { 
+      "name": "consumerCategory",
+      "type": {
+        "name": "Category",
+        "type": "enum",
+        "symbols": ["INDUSTRIAL", "RESIDENTIAL"]
+      },
+      "default": "RESIDENTIAL",
+      "doc": "The category of this consumer (industrial or residential)."
+    },
+    { 
+      "name": "loadCondition", 
+      "type": ["null", "string"],
+      "default": null,
+      "order": "ignore",
+      "doc": "The identifier for the referenced data (may be null if the controller doesn't collect meta-data)."
+    },
+    { 
+      "name": "data", 
+      "type": {
+        "type": "array",
+        "items": "double"
+      },
+      "order": "ignore",
+      "doc": "The array of samples (Double.NAN if the datum is missing)."
+    },
+    {
+      "name": "messageHash",
+      "type": [
+        "null", 
+        {
+          "type": "fixed", 
+          "name": "MD5", 
+          "size": 16
+        }
+      ],
+      "default": null,
+      "order": "ignore",
+      "doc": "An MD5 hash value of this message (ensures data integrity)."
+    },
+    {
+      "name": "meta", 
+      "type": [
+        "null", 
+        {
+          "type": "map", 
+          "values": "bytes"
+        }
+      ],
+      "default": null,
+      "order": "ignore",
+      "doc": "Arbitrary meta data attached by the smart meter."
+    }    
+  ]
+}

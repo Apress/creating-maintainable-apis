@@ -1,0 +1,263 @@
+swagger: "2.0"
+
+info:
+  description: "This is the sample service for Part II of the book \"Creating Maintainable\
+    \ APIs.\" The service exposes a level 3 HTTP REST API (hypermedia-driven) for\
+    \ storing and searching problem reports (per RFC 7807)."
+  version: "0.2.0"
+  title: "Problem Reports Service"
+  contact:
+    name: Ervin Varga
+    email: e.varga@ieee.org
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0"
+
+host: "localhost:8080"
+basePath: "/api/ProblemReports"
+tags:
+- name: "Home Page"
+  description: "This is the entry point of the service."
+- name: "About Page"
+  description: "Some generic information about the service."
+- name: "Reports"
+  description: "Stuff related to collection of reports as well as individual reports."
+schemes:
+- "http"
+consumes:
+- "application/json"
+- "text/xml"
+- "application/xml"
+produces:
+- "application/json"
+- "text/xml"
+- "application/xml"
+- "application/atom+xml"
+- "application/hal+json"
+externalDocs:
+  description: "Click here for more details about the RFC 7807."
+  url: "https://tools.ietf.org/html/rfc7807"
+
+paths:
+  /:
+    parameters:
+    - $ref: "#/parameters/Accept"
+    get:
+      tags:
+      - "Home Page"
+      summary: "Gets available options."
+      description: "Retrieves the initial list of options for a client as well as\
+        \ some top level information (like, the name of the service)."
+      responses:
+        200:
+          description: "The list of affordances for a client accessing this service.\
+            \ The response contains links to further content offered by this service."
+          schema:
+            $ref: "#/definitions/HomePage"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+  /About:
+    parameters:
+    - $ref: "#/parameters/Accept"
+    get:
+      tags:
+      - "About Page"
+      summary: "Gets general information about this service."
+      responses:
+        200:
+          description: "The general information about this service, and a links to\
+            \ navigate through this service."
+          schema:
+            $ref: "#/definitions/AboutPage"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+  /swagger.json:
+    get:
+      produces:
+      - "application/json"      
+      summary: "Gets API specification of this service."
+      responses:
+        200:
+          description: "The API specification of this service in Swagger format."
+          schema:
+            type: "object"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+  /Reports/{reportNumber}:
+    parameters:
+    - $ref: "#/parameters/Accept"
+    - name: "reportNumber"
+      description: "The unique report number."
+      in: "path"
+      type: "string"
+      required: true
+    get:
+      security:
+      - problem-reports-realm: []
+      tags:
+      - "Reports"
+      summary: "Gets data about an individual problem report."
+      responses:
+        200:
+          description: "The data associated with this problem report, and links to\
+            \ available options regarding this entity."
+          schema:
+            $ref: "#/definitions/ProblemReport"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+    delete:
+      security:
+      - problem-reports-realm: []
+      tags:
+      - "Reports"
+      summary: "Deletes the given problem report."
+      responses:
+        204:
+          description: "This problem report has been removed from the system."
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+  /Reports:
+    parameters:
+    - $ref: "#/parameters/Accept"
+    - name: "correlationId"
+      description: "The identifier for grouping reports."
+      in: "query"
+      type: "string"
+    get:
+      security:
+      - problem-reports-realm: []
+      tags:
+      - "Reports"
+      summary: "Gets all registered problem reports, or just its subset filtered by the\
+        \ correlation identifier."
+      responses:
+        200:
+          description: "The collection of problem reports, and links to\
+            \ available options regarding this entity."
+          schema:
+            $ref: "#/definitions/ProblemReports"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+  /Reports/favorite:
+    parameters:
+    - $ref: "#/parameters/Accept"
+    get:
+      security:
+      - problem-reports-realm: []
+      tags:
+      - "Reports"
+      summary: "Gets the favorite problem reports."
+      responses:
+        200:
+          description: "The collection of favorite problem reports, and links to\
+            \ available options regarding this entity."
+          schema:
+            $ref: "#/definitions/ProblemReports"
+        default:
+          $ref: "#/responses/UnexpectedServiceError"
+
+securityDefinitions:
+  problem-reports-realm:
+    description: "The service should be protected by a minimal basic authentication\
+      \ mechanism to prevent inadvertent usage (the assumption is that this service\
+      \ will run behind a corporate firewall)."
+    type: "basic"
+
+parameters:
+  Accept:
+    name: "Accept"
+    in: "header"
+    description: "The media type requested by a client: application/json,\
+      \ application/xml, application/hal+json or application/atom+xml."
+    required: false
+    default: "application/json"
+    type: "string"
+    x-example: "Accept: application/atom+xml"
+    
+responses:
+  UnexpectedServiceError:
+    description: Unexpected service error (4x or 5x type of error).
+    schema:
+      $ref: "#/definitions/ProblemReport"
+      
+definitions:
+  Links:
+    description: "Contains links related to all resource representations."
+    type: "array"
+    minItems: 1
+    uniqueItems: true    
+    items:
+      type: "object"
+      title: "LinkItem"
+      properties:
+        href:
+          type: "string"
+          description: "The URL to the resource representation."
+        rel:
+          type: "string"
+          description: "The relation's name; for example, self, about, contents, etc."
+      required:
+      - "href"
+      - "rel"
+  HomePage:
+    type: "object"
+    required:
+    - "links"
+    - "name"
+    properties:
+      links:
+        $ref: "#/definitions/Links"
+      name:
+        type: "string"
+        description: "The name of this page."
+    description: "The resource representation of this page. It contains\
+      \ dynamic links to drive the behavior via hypermedia controls."
+  AboutPage:
+    allOf:
+    - $ref: "#/definitions/HomePage"
+    - type: "object"
+      title: "AboutExtraData"
+      required:
+      - "about"
+      - "text"
+      properties:
+        about:
+          type: "string"
+          description: "A short summary about this service."
+        text:
+          type: "string"
+          description: "A detailed description of this service."
+  ProblemReport:
+    type: "object"
+    required:
+    - "type"
+    - "title"
+    - "status"
+    - "correlationId"
+    properties:
+      links:
+        $ref: "#/definitions/Links"
+      reportNumber:
+        type: "string"
+        description: "The globally unique report identifier."
+      type:
+        type: "string"
+        description: "The type of this report (used to categorize problems)."
+      title:
+        type: "string"
+        description: "The name of this problem report."
+      status:
+        type: "integer"
+        description: "The status code associated with this problem."
+      correlationId:
+        type: "string"
+        description: "The identifier to group related reports together."
+    description: "The resource representation of an individual problem report.\ 
+      \ It contains dynamic links to drive the behavior via hypermedia controls."
+  ProblemReports:
+    type: "array"
+    uniqueItems: true    
+    items:
+      $ref: "#/definitions/ProblemReport"
+    description: "The collection of problem reports.\ 
+      \ It contains dynamic links to drive the behavior via hypermedia controls."

@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "artifacts",
+    "attributes": {
+      "name": "Sword",
+      "description": "This is a very powerful attack weapon.",
+      "value": 20,
+      "purpose": "Attack"
+    }
+  }
+}

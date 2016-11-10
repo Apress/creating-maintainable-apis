@@ -1,0 +1,191 @@
+---
+swagger: "2.0"
+info:
+  description: "This is a demonstration of the RAD technique to create a HTTP REST\
+    \ like service."
+  version: "1.0.0"
+  title: "Problem Reports"
+  contact: {}
+host: "localhost:80"
+basePath: "/rad-demo"
+tags:
+- name: "Reports"
+  description: "The collection of reports."
+- name: "Report"
+  description: "An individual report."
+schemes:
+- "http"
+paths:
+  /reports:
+    get:
+      tags:
+      - "Reports"
+      summary: "Retrieve the list of reports."
+      description: "Get the list of URLs pointing to individual reports."
+      operationId: "reportsGET"
+      consumes: []
+      produces:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      parameters: []
+      responses:
+        200:
+          description: "Each item in the list is a URL toward an individual report."
+          schema:
+            $ref: "#/definitions/ReportList"
+      x-swagger-router-controller: "Reports"
+    post:
+      tags:
+      - "Reports"
+      summary: "Create a new report."
+      description: "Creates a new report, and adds it to this collection."
+      operationId: "reportsPOST"
+      consumes:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      parameters:
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Report"
+      responses:
+        201:
+          description: "The updated report list."
+          schema:
+            $ref: "#/definitions/ReportList"
+      x-swagger-router-controller: "Reports"
+    delete:
+      tags:
+      - "Reports"
+      summary: "Deletes all reports from the system."
+      description: "This action prunes away all registered problem reports."
+      operationId: "reportsDELETE"
+      consumes: []
+      produces: []
+      parameters: []
+      responses:
+        204:
+          description: "Success"
+      x-swagger-router-controller: "Reports"
+  /reports/report/{reportId}:
+    get:
+      tags:
+      - "Report"
+      summary: "Get the report."
+      description: "Retrieves an individual report."
+      operationId: "reportsReportReportIdGET"
+      consumes: []
+      produces:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      parameters:
+      - name: "reportId"
+        in: "path"
+        description: "The id of the individual report."
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Report"
+        404:
+          description: "Error 404"
+      x-swagger-router-controller: "Report"
+    put:
+      tags:
+      - "Report"
+      summary: "Updates the given report."
+      description: "The given report is updated to reflect the new variables."
+      operationId: "reportsReportReportIdPUT"
+      consumes:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      produces:
+      - "application/json"
+      - "text/xml"
+      - "application/xml"
+      parameters:
+      - name: "reportId"
+        in: "path"
+        description: "The id of the individual report."
+        required: true
+        type: "string"
+      - in: "body"
+        name: "body"
+        required: false
+        schema:
+          $ref: "#/definitions/Report"
+      responses:
+        200:
+          description: "Success"
+          schema:
+            $ref: "#/definitions/Report"
+      x-swagger-router-controller: "Report"
+    delete:
+      tags:
+      - "Report"
+      summary: "Deletes an individual report."
+      description: "Deletes the given report permanenty from the system."
+      operationId: "reportsReportReportIdDELETE"
+      consumes: []
+      produces: []
+      parameters:
+      - name: "reportId"
+        in: "path"
+        description: "The id of the individual report."
+        required: true
+        type: "string"
+      responses:
+        204:
+          description: "Success"
+      x-swagger-router-controller: "Report"
+definitions:
+  Report:
+    type: "object"
+    required:
+    - "errorCode"
+    - "id"
+    - "statusCode"
+    - "title"
+    properties:
+      correlationId:
+        type: "string"
+        description: "The correlation identifier to relate reports."
+      description:
+        type: "string"
+        description: "A longer description of the problem."
+      errorCode:
+        type: "string"
+        description: "An application error code."
+      id:
+        type: "string"
+        description: "The unique identifier of this report."
+      statusCode:
+        type: "integer"
+        format: "int32"
+        description: "An HTTP status code."
+      title:
+        type: "string"
+        description: "The title of this report."
+    description: "The description of an individual report."
+  ReportList:
+    type: "object"
+    required:
+    - "reports"
+    properties:
+      reports:
+        type: "array"
+        description: "The items in this list."
+        items:
+          type: "string"
+    description: "The list of report URLs."

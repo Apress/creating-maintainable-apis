@@ -1,0 +1,54 @@
+<?xml version="1.0"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>rs.exproit</groupId>
+        <artifactId>modular-integral</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>client-api</artifactId>
+    <version>1.0.0</version>
+    <name>Client API</name>
+    <description>Implements the client API bridge toward providers.</description>
+    <packaging>bundle</packaging>
+    <dependencies>
+        <dependency>
+            <groupId>org.osgi</groupId>
+            <artifactId>org.osgi.service.component.annotations</artifactId>
+            <version>1.3.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>rs.exproit</groupId>
+            <artifactId>provider-api</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.12</version>
+            <scope>test</scope>
+        </dependency>
+    </dependencies>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>
+                            ${project.groupId}.${project.parent.artifactId}.${project.artifactId}
+                        </Bundle-SymbolicName>
+                        <Import-Package>rs.exproit.modular_integral.provider.api</Import-Package>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

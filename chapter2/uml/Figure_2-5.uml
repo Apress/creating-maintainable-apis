@@ -1,0 +1,17 @@
+@startuml
+
+interface "IntegralSPI" as SPI
+interface "IntegralClient" as CLIENT
+
+SPI - [provider-api]
+CLIENT - [client-api]
+
+[client-api] ..> SPI : use
+
+package "Providers" {
+  [provider-directsummation] .up.> SPI : implement
+  [provider-simpsonsrule] .up.> SPI : implement
+  [provider-rombergsmethod] .up.> SPI : implement
+}
+
+@enduml

@@ -1,0 +1,33 @@
+@startuml
+ 
+(List all problem reports) as UC1
+(Search problem reports) as UC2
+(Create a new problem report) as UC3
+(Delete a problem report) as UC4
+(Update a problem report) as UC5
+(Retrieve favorite problem reports) as UC6
+
+Client << Application >>
+:Privileged Client: as Admin << Application >>
+Client <|-- Admin
+
+left to right direction
+
+Admin -- UC1
+Admin -- UC2
+Admin -- UC3
+Admin -- UC4
+Admin -- UC5
+Admin -- UC6
+
+(Examine the service) as UC7
+(Find general information) as UC8
+
+Client -- UC7
+Client -- UC8
+
+note "These are auxiliary use cases\npopped up during resource design." as N1
+(UC7)..N1
+(UC8)..N1
+
+@enduml

@@ -1,0 +1,14 @@
+{
+  "data": {
+    "type": "heroes",
+    "attributes": {
+      "name": "Hulk",
+      "attackPower": 80,
+      "defensePower": 70,
+      "magicPower": 10,
+      "health": 100,
+      "style": "Warrior",
+      "experience": 5
+    }
+  }
+}

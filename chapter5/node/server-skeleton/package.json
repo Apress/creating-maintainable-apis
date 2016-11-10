@@ -1,0 +1,16 @@
+{
+  "name": "problem-reports",
+  "version": "1.0.0",
+  "description": "This is a demonstration of the RAD technique to create a HTTP REST like service.",
+  "main": "index.js",
+  "keywords": [
+    "swagger"
+  ],
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "connect": "^3.2.0",
+    "js-yaml": "^3.3.0",
+    "swagger-tools": "0.9.*"
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "games",
+    "attributes": {
+      "name": "Sample Community Game 1",
+      "description": "This is the first game for testing purposes.",
+      "minPlayers": 2,
+      "maxPlayers": 4
+    }
+  }
+}

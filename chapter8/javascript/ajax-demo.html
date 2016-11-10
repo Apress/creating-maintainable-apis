@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <body onLoad = "loadDocument()">
+    <h1>AJAX Demo</h1>
+    <div id="placeholder" /div>
+  </body>
+
+  <script type="text/javascript">
+    function loadDocument() {
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4) {
+          if (this.status == 200) {
+            document.getElementById("placeholder").innerHTML = this.responseText;
+          } else {
+            document.getElementById("placeholder").innerHTML = this.statusText
+          }
+        };
+      }
+      xhttp.open("GET", "http://exproit.rs?t=" + Math.random());
+      xhttp.send();
+      document.getElementById("placeholder").innerHTML = "Waiting for the response...";
+    }
+  </script>
+</html>

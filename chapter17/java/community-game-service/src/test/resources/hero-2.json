@@ -1,0 +1,14 @@
+{
+  "data": {
+    "type": "heroes",
+    "attributes": {
+      "name": "Merlin",
+      "attackPower": 15,
+      "defensePower": 10,
+      "magicPower": 90,
+      "health": 100,
+      "style": "Wizard",
+      "experience": 10
+    }
+  }
+}

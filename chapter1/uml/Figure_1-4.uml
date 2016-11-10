@@ -1,0 +1,26 @@
+@startuml
+abstract class IntegralPortfolio {
+}
+
+class DirectSummation {
+   dx : double
+
+   getDx(): double
+}
+
+class SimpsonsRule{
+   n : integer
+
+   getN(): integer
+}
+
+interface IntegralV2 {
+   calculate(Function<Double,Double>f, double a, double b, 
+                     IntegralPortfolio spec): double
+}
+
+IntegralPortfolio <|-- DirectSummation
+IntegralPortfolio <|-- SimpsonsRule
+
+IntegralPortfolio "many" -- "1" IntegralV2 : specifies >
+@enduml

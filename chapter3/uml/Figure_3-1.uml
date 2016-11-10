@@ -1,0 +1,37 @@
+@startuml
+
+interface ListModel<E> {
+  +addListDataListener(ListDataListener l)
+  +getElementAt(int index)
+  +getSize()
+  +removeListDataListener(ListDataListener l) 
+}
+
+interface ComboBoxModel<E> {
+  +getSelectedItem()
+  +setSelectedItem(Object anItem)
+}
+
+interface MutableComboBoxModel<E> {
+  +addElement(E item)
+  +insertElementAt(E item, int index)
+  +removeElement(Object obj)
+  +removeElementAt(int index)
+}
+
+class AbstractListModel<E> {
+  -fields
+}
+
+class DefaultComboBoxModel<E> {
+  -fields
+}
+
+ListModel <|-- ComboBoxModel
+ComboBoxModel <|-- MutableComboBoxModel
+MutableComboBoxModel <|.right. DefaultComboBoxModel
+AbstractListModel <|-- DefaultComboBoxModel
+
+hide attributes
+
+@enduml

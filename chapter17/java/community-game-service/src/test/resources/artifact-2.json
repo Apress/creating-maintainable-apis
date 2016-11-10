@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "artifacts",
+    "attributes": {
+      "name": "Shield",
+      "description": "This is a very powerful defense weapon.",
+      "value": 15,
+      "purpose": "Defense"
+    }
+  }
+}

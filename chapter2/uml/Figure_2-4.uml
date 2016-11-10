@@ -1,0 +1,21 @@
+@startuml
+
+interface Service << API >> {
+  {abstract} operation1()
+  {abstract} operation2()
+  {abstract} operation3()
+}
+note right: Inside package: rs.exproit.service.api
+
+class ServiceImpl {
+  operation1()
+  operation2()
+  operation3()
+}
+note right: Inside package: rs.exproit.service.impl
+
+Service <|-- ServiceImpl
+
+hide attributes
+
+@enduml

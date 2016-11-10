@@ -1,0 +1,26 @@
+@startuml
+title Sample HTTP session between a client and a server using the JSON API
+
+actor Client
+control Server
+
+Client->Server: get(/some-resource)
+note over Client: Accept: ext="myOrg.ext1,myOrg.ext2" 
+
+Server->Client: error: 406 Not Acceptable
+note over Server: Content-Type: supported-ext="jsonpatch,myOrg.ext1,myOrg.ext3"
+
+Client->Server:get(/some-resource)
+note over Client: Accept: ext=myOrg.ext1
+
+Server->Client: response using the myOrg.ext1 extension
+note over Server: Content-Type: ext=myOrg.ext1; supported-ext="jsonpatch,myOrg.ext1,myOrg.ext3"
+
+...couple of minutes latter...
+
+Client->Server: patch(request body using the JSON Patch and myOrg.ext1 extensions)
+note over Client: Content-Type: ext="jsonpatch,myOrg.ext1"
+
+Server->Client: acknowledge the patch request
+note over Server: Content-Type: supported-ext="jsonpatch,myOrg.ext1,myOrg.ext3"
+@enduml

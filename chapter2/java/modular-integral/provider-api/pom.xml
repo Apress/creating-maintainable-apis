@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<project
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>rs.exproit</groupId>
+        <artifactId>modular-integral</artifactId>
+        <version>1.0.0</version>
+    </parent>
+    <artifactId>provider-api</artifactId>
+    <version>1.0.0</version>
+    <name>Provider API</name>
+    <description>The bundle that encompasses the common API for integral providers.</description>
+    <packaging>bundle</packaging>
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.felix</groupId>
+                <artifactId>maven-bundle-plugin</artifactId>
+                <version>3.2.0</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <instructions>
+                        <Bundle-SymbolicName>
+                            ${project.groupId}.${project.parent.artifactId}.${project.artifactId}
+                         </Bundle-SymbolicName>
+                    </instructions>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>

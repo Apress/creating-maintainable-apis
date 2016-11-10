@@ -1,0 +1,32 @@
+@startuml
+
+[*] --> HomePage : billboard URL (safe)
+HomePage : list of initial options
+
+HomePage --> AboutPage : about (safe)
+HomePage --> HomePage : self (safe)
+AboutPage : general information
+AboutPage --> HomePage : home (safe)
+AboutPage --> AboutPage : self (safe)
+
+HomePage --> ProblemReports : reports (safe)
+ProblemReports --> HomePage : home (safe)
+ProblemReports : list of individual problem reports
+
+ProblemReports --> ProblemReports : self (safe)/search (safe)/create report (unsafe, non-idempotent)
+ProblemReports --> ProblemReport : report (safe)
+ProblemReport : fields describing a problem
+
+ProblemReport --> ProblemReport : self (safe)/update (unsafe, idempotent)
+ProblemReport --> ProblemReports : related reports (safe)
+ProblemReport --> ProblemReports : parent (safe)
+
+ProblemReports --> [*] : delete (unsafe, idempotent)
+ProblemReport --> [*] : delete (unsafe, idempotent)
+
+note top of HomePage
+  A client may start with an arbitrary resource if it knows
+  its URL in advance.
+end note
+
+@enduml

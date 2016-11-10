@@ -1,0 +1,11 @@
+{
+  "data": {
+    "type": "games",
+    "attributes": {
+      "name": "Sample Community Game - Wrong",
+      "description": "This is the game for testing constraint violation.",
+      "minPlayers": 1,
+      "maxPlayers": 4
+    }
+  }
+}

@@ -1,0 +1,27 @@
+@startuml
+ 
+class HomePage <<resource>> {
+}
+
+class AboutPage <<resource>> {
+  +general info
+}
+
+class ProblemReports <<resource>> {
+}
+
+class ProblemReport <<resource>> {
+  +report number (id)
+  +type
+  +title
+  +HTTP status code
+  +correlation id
+}
+
+HomePage -- AboutPage
+HomePage -- ProblemReports
+ProblemReports o- ProblemReport
+
+hide methods
+
+@enduml

@@ -1,0 +1,46 @@
+@startuml
+class NamedEntity {
+  id: Long
+  name: String
+}
+
+class Game << resource >> {
+   description : String
+   minPlayers: Integer
+   maxPlayers : Integer
+}
+
+class Artifact << resource >> {
+   description : String
+   value: [1..100]
+   purpose : ["Defense", "Attack", "Magic",
+   "Health", "Treasure"]
+}
+
+class Hero << resource >> {
+   defensePower : [1..1000]
+   attackPower: [1..1000]
+   magicPower : [1..1000]
+   health: [1..100]
+   style: ["Warrior", "Wizard"]
+   experience: [1..100]
+}
+
+class Player << resource >> {
+   wealth: Integer
+   rank : ["Rookie", "Normal", "Master"]
+}
+
+NamedEntity <|-- Game
+NamedEntity <|-- Artifact
+NamedEntity <|-- Hero
+NamedEntity <|-- Player
+
+Game "1" *-- "many" Hero : introduces >
+Game "1" *- "many" Artifact : offers >
+Hero "0..1" o-- "many" Artifact : holds >
+Player "0..1" .. "many" Hero : controls >
+Player "many" . "many" Game : participate >
+
+hide methods
+@enduml
