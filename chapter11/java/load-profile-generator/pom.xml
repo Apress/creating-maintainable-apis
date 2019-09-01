@@ -4,7 +4,7 @@
 
     <groupId>rs.exproit</groupId>
     <artifactId>load-profile-generator</artifactId>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <packaging>jar</packaging>
 
     <name>Load Profile Generator</name>
@@ -69,6 +69,22 @@
                     <target>1.8</target>
                 </configuration>
             </plugin>
+            <plugin>
+                <artifactId>maven-clean-plugin</artifactId>
+                <version>3.1.0</version>
+                <configuration>
+                    <filesets>
+                        <fileset>
+                            <directory>src/main/java/</directory>
+                            <excludes>
+                                <exclude>**/App.java</exclude>
+                                <exclude>**/LoadProfileRPCImpl.java</exclude>
+                            </excludes>
+                            <followSymlinks>false</followSymlinks>
+                        </fileset>
+                    </filesets>
+                </configuration>
+            </plugin>            
         </plugins>
     </build>
 </project>
