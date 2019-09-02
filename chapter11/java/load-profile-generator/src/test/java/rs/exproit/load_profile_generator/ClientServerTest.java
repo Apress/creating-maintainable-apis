@@ -12,6 +12,7 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
+import rs.exproit.load_profile_generator.domain.*;
 import rs.exproit.load_profile_generator.protocol.LPCreationRequest;
 import rs.exproit.load_profile_generator.protocol.LoadProfileRPC;
 
@@ -61,5 +62,15 @@ public class ClientServerTest {
         response = proxy.lpCreate(createRequest(null)).toString();
         assertNotNull(response);
         assert(response).contains("\"loadCondition\": null");
+
+        // Read and verify the serialized data file.
+        DatumReader<LoadProfileModel> lpDatumReader = new SpecificDatumReader<LoadProfileModel>(LoadProfileModel.class);
+        DataFileReader<LoadProfileModel> dataFileReader = new DataFileReader<LoadProfileModel>(new File(TEST_DATA_FILE), lpDatumReader);
+        LoadProfileModel load_profile = null;
+        for (int i = 0; i < 100; i++) {
+            // Reuse load profile object and avoid excessive garbage collections.
+            load_profile = dataFileReader.next(load_profile);
+            assertEquals(new Utf8("http://example.org/api/Controller/LoadConditions/" + i), load_profile.getLoadCondition());
+        }
     }
 }
