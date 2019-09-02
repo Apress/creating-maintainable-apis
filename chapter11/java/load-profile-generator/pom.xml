@@ -51,6 +51,7 @@
                         <phase>generate-sources</phase>
                         <goals>
                             <goal>schema</goal>
+                            <goal>idl-protocol</goal>
                             <goal>protocol</goal>
                         </goals>
                         <configuration>
