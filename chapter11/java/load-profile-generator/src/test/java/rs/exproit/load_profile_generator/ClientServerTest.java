@@ -6,6 +6,7 @@ import java.io.File;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 
+import org.apache.avro.file.DataFileReader;
 import org.apache.avro.io.DatumReader;
 import org.apache.avro.ipc.NettyTransceiver;
 import org.apache.avro.ipc.specific.SpecificRequestor;
