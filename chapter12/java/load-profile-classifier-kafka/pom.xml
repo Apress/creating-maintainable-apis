@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <avro.version>1.8.1</avro.version>
-        <kafka.version>0.10.0.1</kafka.version>
+        <kafka.version>0.10.2.2</kafka.version>
     </properties>
 
     <description>The LP classification system (controller + smart meter + classifier). This example sends events into a Kafka topic.</description>
